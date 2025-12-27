@@ -242,12 +242,10 @@ class StraceParser:
             # clone returns the thread id of the child process
             child_pid = str(ret_int)
             # Child process initially executes the same program as the parent
-            if pid not in self.exec_map:
-                _LOGGER.error("Parent program unknown: '%s'", line)
-                sys.exit(1)
-            bin_file = self.exec_map[pid]
-            # Add/replace the entry in exec_map:
-            self.exec_map[child_pid] = bin_file
+            if pid in self.exec_map:
+                bin_file = self.exec_map[pid]
+                # Add/replace the entry in exec_map:
+                self.exec_map[child_pid] = bin_file
 
         # Other syscalls
         else:
