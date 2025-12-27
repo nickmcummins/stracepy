@@ -36,10 +36,14 @@ def current_func_name():
 
 def df_to_csv_file(df, name):
     """Write dataframe to csv file"""
-    df.to_csv(
+    output = df.to_csv(
         path_or_buf=name, quoting=csv.QUOTE_ALL, sep=",", index=False, encoding="utf-8"
     )
-    logging.getLogger(LOGGER_NAME).info("Wrote: %s", name)
+    if name is not None:
+        logging.getLogger(LOGGER_NAME).info("Wrote: %s", name)
+    else:
+        print(output)
+
 
 
 def df_from_csv_file(name):

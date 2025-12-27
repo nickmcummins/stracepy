@@ -13,6 +13,7 @@ import os
 import sys
 import re
 import logging
+import tempfile
 
 import pandas as pd
 
@@ -353,10 +354,13 @@ def getargs():
     parser = argparse.ArgumentParser(description=desc, epilog=epil)
 
     helpstr = "path to strace log file"
-    parser.add_argument("STRACE_LOG", nargs=1, help=helpstr)
+    parser.add_argument("--strace", help=helpstr)
+
+    helpstr = "command to run using strace"
+    parser.add_argument("--command", help=helpstr)
 
     helpstr = "set the output file name, default is 'strace.csv'"
-    parser.add_argument("--out", nargs="?", help=helpstr, default="strace.csv")
+    parser.add_argument("--out", nargs="?", help=helpstr, default=None)
 
     helpstr = "set the verbose level between 0-3 (defaults to --verbose=1)"
     parser.add_argument("--verbose", help=helpstr, type=int, default=1)
@@ -371,7 +375,18 @@ def main():
     """main entry point"""
     parsed_args = getargs()
     setup_logging(parsed_args.verbose)
-    strace_parser = StraceParser(parsed_args.STRACE_LOG[0])
+
+
+    if parsed_args.command is not None:
+        _LOGGER.info(f'Executing {parsed_args.command}.')
+        fp = tempfile.NamedTemporaryFile()
+        os.popen(f'strace -f -tt -T -y -yy -o {fp.name} {parsed_args.command}').read()
+        strace_log = fp.name
+        _LOGGER.info(f'Wrote {strace_log}.')
+    else:
+        strace_log = parsed_args.strace
+
+    strace_parser = StraceParser(strace_log)
     strace_parser.parse()
     strace_parser.to_csv(parsed_args.out)
 
