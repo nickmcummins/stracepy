@@ -1,2 +1,27 @@
-- name: GitLab Mirror Action
-  uses: 0xTheProDev/gitlab-mirror@v1
+---
+name: Mirror Repository
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  gitlab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # This must be set to 0 to avoid shallow cloning.
+
+      - name: Mirror Repository
+        uses: 0xTheProDev/gitlab-mirror@v1
+        with:
+          password: ${{ secrets.GITLAB_PAT }}
+          hostname: gitlab.nickmcummins.com
+          project-id: "7"
+          username: "nickmcummins@linxumail.org"
