@@ -13,6 +13,9 @@ jobs:
   gitlab:
     runs-on: ubuntu-latest
     steps:
+      - name: Update CA certificates
+        run: apt-get update && apt-get install -y ca-certificates update-ca-certificates
+      
       - name: Checkout
         uses: actions/checkout@v4
         with:
