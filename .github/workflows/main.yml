@@ -25,9 +25,8 @@ jobs:
           fetch-depth: 0 # This must be set to 0 to avoid shallow cloning.
 
       - name: Mirror Repository
-        uses: 0xTheProDev/gitlab-mirror@v1
+        uses: nickmcummins/gitlab-mirror@v1.0.1
         with:
           password: ${{ secrets.GITLAB_PAT }}
-          hostname: gitlab.nickmcummins.com
-          project-id: "stracepy"
-          username: "forks"
+          repository_url: https://gitlab.nickmcummins.com/forks/stracepy.git
+          username: nickmcummins@linuxmail.org
