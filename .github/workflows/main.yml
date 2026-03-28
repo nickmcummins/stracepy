@@ -19,15 +19,9 @@ jobs:
             sudo update-ca-certificates
             git config --global http.sslVerify false
             
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Git Repo Sync
+        uses: wangchucheng/git-repo-sync@v0.1.0
         with:
-          fetch-depth: 0 # This must be set to 0 to avoid shallow cloning.
-
-      - name: Mirror Repository
-        uses: 0xTheProDev/gitlab-mirror@v1
-        with:
-          password: ${{ secrets.GITLAB_PAT }}
-          hostname: gitlab.nickmcummins.com
-          project-id: "stracepy"
-          username: "forks"
+          target-url: https://gitlab.nickmcummins.com/forks/stracepy.git
+          target-username: nickmcummins@linuxmail.org
+          target-token: ${{ secrets.GITLAB_PAT }}
