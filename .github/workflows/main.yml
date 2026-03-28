@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0            
       - name: Git Repo Sync
-        uses: nickmcummins/git-repo-sync@v0.1.0
+        uses: wangchucheng/git-repo-sync@v0.1.0
         with:
           target-url: https://gitlab.nickmcummins.com/forks/stracepy.git
           target-username: nickmcummins@linuxmail.org
