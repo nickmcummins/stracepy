@@ -23,5 +23,5 @@ jobs:
         with:
           password: ${{ secrets.GITLAB_PAT }}
           hostname: gitlab.nickmcummins.com
-          project-id: "7"
-          username: "nickmcummins@linxumail.org"
+          project-id: "stracepy"
+          username: "forks"
