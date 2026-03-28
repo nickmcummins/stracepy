@@ -18,9 +18,7 @@ jobs:
             sudo apt-get update && sudo apt-get install -y ca-certificates
             sudo update-ca-certificates
             git config --global http.sslVerify false
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0            
+            
       - name: Git Repo Sync
         uses: wangchucheng/git-repo-sync@v0.1.0
         with:
